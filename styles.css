@@ -1,7 +1,7 @@
 body {
     text-align: center;
     background-image: url(udacity.png);
-    background-size: cover;
+    background-size: 100% 80%;
     background-repeat: no-repeat;
 }
 .main{
