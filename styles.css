@@ -1,18 +1,42 @@
 body {
     text-align: center;
+    background-image: url(udacity.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.main{
+    width: 80vw;
+    /*background-image: url(https://im-01.gifer.com/3grp.gif);*/
+    /*background-size: cover;*/
+    background-color: rgba(150,155,250,0.7);
+}
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+    opacity: 1;
 }
 
 h1 {
     font-family: Monoton;
-    font-size: 70px;
+    font-size: 3em;
     margin: 0.2em;
 }
 
-h2 {
+
+h3 {
     margin: 1em 0 0.25em;
+    font-family: cursive;
 }
 
-h2:first-of-type {
+h3:first-of-type {
     margin-top: 0.5em;
 }
 
@@ -23,6 +47,7 @@ td {
 }
 
 table {
+    height: 20vh;
     border-collapse: collapse;
     margin: 0 auto;
 }

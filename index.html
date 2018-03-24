@@ -1,28 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Pixel Art Maker!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">        
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container-fluid main">
+    <header>
     <h1>Lab: Pixel Art Maker</h1>
-
-    <h2>Choose Grid Size</h2>
+    </header>
+    <div>
+    <h3>Choose Grid Size</h3>
+    </div>
     <form id="sizePicker">
-        Grid Height:
-        <input type="number" id="inputHeight" name="height" min="1" value="1">
-        Grid Width:
-        <input type="number" id="inputWeight" name="width" min="1" value="1">
-        <input type="submit">
+        <div class="row">
+        <div class="col-xs-6 text-right">
+        <label for="inputHeight">
+        <span>Grid Height:</span>
+        <input type="number" id="inputHeight" name="height" min="5" max="25" value="5" step="5">
+        </label>
+        </div>
+        <div class="col-xs-6 text-left">
+        <label for="inputWeight">
+        <span>Grid Width:</span>
+        <input type="number" id="inputWeight" name="width" min="5" max="25" value="5" step="5">
+        </label>        
+        </div>
+        </div>
+        <input class="btn btn-primary" type="button" id="submit" value="Submit">
     </form>
-
-    <h2>Pick A Color</h2>
-    <input type="color" id="colorPicker">
-
-    <h2>Design Canvas</h2>
-    <table id="pixelCanvas"></table>
-
+    <div id="error"></div>    
+    <h3>Pick A Color</h3>
+    <input type="color" id="colorPicker" value="#ff0012">
+    <div>
+    <h3>Design Canvas</h3>
+    <table id="pixelCanvas">
+    </table>
+    </div>
+    <footer>
+    <span>Designed by Gaurav Singh</span>
+    <p><a class="fa fa-facebook-square" href="https://www.facebook.com/gauravsinghaec"></a>
+    <a class="fa fa-github-square" href="https://github.com/gauravsinghaec"></a>
+    <a class="fa fa-linkedin-square" href="https://www.linkedin.com/in/gaurav-singh-a5163063/"></a></p>
+    </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="designs.js"></script>
 </body>
 </html>
