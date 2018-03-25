@@ -1,18 +1,24 @@
 // Select color input
 const color = $("#colorPicker");
+// Select the canvas area
 const gridArea = $("#pixelCanvas");
 // Select size input
 const height = $("#inputHeight");
 const width = $("#inputWeight");
-// When size is submitted by the user, call makeGrid()
+// Select buttons and error div
 const subBtn = $("#submit");
 const resetBtn = $("#reset");
 const downloadBtn = $("#save");
 const errorDiv = $("#error");
+// HTML components to be added dynamically by code
 const x = "<tr class='canvasRow'></tr>";
 const y = "<td class='canvasCol'></td>";
 const imgLink = $("<a id='myimage'>");
 
+/**
+* @description It creates the cell of the table and registers click
+*				event on each cell to set/unset the colors
+*/
 function makeGrid() {
 // Your code goes here!
 	$(".canvasRow:last").append(y);
@@ -28,6 +34,10 @@ function makeGrid() {
 	})
 }
 
+/**
+*@Event_Listener: It alert user about limit on width/height
+*	in realtime before hitting submit.
+*/
 $("#inputHeight, #inputWeight").on("change, keyup",function(evt){
 	console.log($(this).val());
 	if($(this).val() >30){
@@ -41,6 +51,10 @@ $("#inputHeight, #inputWeight").on("change, keyup",function(evt){
 	}
 });
 
+/**
+*@Event_Listener: When size is submitted by the user, call makeGrid()
+*				to draw the grid structure for pixel art.
+*/
 $(subBtn).on("click",function(evt){
 	// evt.preventDefault();
 	const col = $(width).val();
@@ -58,6 +72,10 @@ $(subBtn).on("click",function(evt){
 	$(downloadBtn).removeAttr("hidden");
 });
 
+/**
+* @Event_Listener: It resets the page state.
+*
+*/
 $(resetBtn).on("click",function(evt){
 	$(downloadBtn).attr("hidden","true");
 	$(errorDiv).attr("hidden","true");
@@ -68,6 +86,15 @@ $(resetBtn).on("click",function(evt){
 	$(".canvasCol").remove();
 });
 
+/**
+* @Event_Listener: When user click download it does following:
+*					,generate temporary "canvas" tag using table
+*					,adds anchor tag inside canvas
+*					,convert canvas to set image "href" attribute
+*					,sets the "download" attribute on anchor tag
+*					,triggers click event on anchor tag to start download
+*					,removes the "canvas" tag
+*/
 $(downloadBtn).on("click",function(evt){
 	html2canvas(document.querySelector("#table"))
 	.then(canvas => {
@@ -78,7 +105,6 @@ $(downloadBtn).on("click",function(evt){
 	    .attr("href", img)
 	    .attr("download", "pixel_art.png")
 	    .appendTo(canvas)
-	    .text("Click Me");
 	document.getElementById("myimage")
 		.click();
 	$(canvas).remove();
