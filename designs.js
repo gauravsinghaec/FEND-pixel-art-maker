@@ -1,71 +1,78 @@
 // Select color input
-var color = $('#colorPicker');
-var gridArea = $('#pixelCanvas');
+const color = $("#colorPicker");
+const gridArea = $("#pixelCanvas");
 // Select size input
-var height = $('#inputHeight');
-var width = $('#inputWeight');
+const height = $("#inputHeight");
+const width = $("#inputWeight");
 // When size is submitted by the user, call makeGrid()
-var subBtn = $('#submit');
-// var resetBtn = $('#reset');
-var x = "<tr class='canvasRow'></tr>";
-var y = "<td class='canvasCol'></td>";
+const subBtn = $("#submit");
+const resetBtn = $("#reset");
+const downloadBtn = $("#save");
+const errorDiv = $("#error");
+const x = "<tr class='canvasRow'></tr>";
+const y = "<td class='canvasCol'></td>";
+const imgLink = $("<a id='myimage'>");
+
 function makeGrid() {
 // Your code goes here!
 	$(".canvasRow:last").append(y);
-	$(".canvasCol:last").on('click',function(e){
+	$(".canvasCol:last").on("click",function(e){
 		selecteColor = $(color).val();
 		preColor = $(this).css("background-color");
-		if(preColor == "rgb(255, 255, 255)" 
+		if(preColor == "rgb(255, 255, 255)"
 			|| preColor == "rgba(0, 0, 0, 0)"){
-			$(this).css("background-color",selecteColor);		
+			$(this).css("background-color",selecteColor);
 		}else{
-			$(this).css("background-color","rgb(255, 255, 255)");		
+			$(this).css("background-color","rgb(255, 255, 255)");
 		}
 	})
 }
 
-$("#inputHeight, #inputWeight").on('change',function(evt){
-	console.log($(this).val());	
+$("#inputHeight, #inputWeight").on("change, keyup",function(evt){
+	console.log($(this).val());
 	if($(this).val() >30){
-		$(subBtn).prop('disabled','true');
-		$("#error").removeAttr('hidden');
-		$("#error").text("Max allowable height/width value is 30.");
-		$("#error").css("color","red");
+		$(subBtn).prop("disabled","true");
+		$(errorDiv).removeAttr("hidden");
+		$(errorDiv).text("Max allowable height/width value is 30.");
+		$(errorDiv).css("color","red");
 	}else{
-		$("#error").attr("hidden","true");
-		$(subBtn).removeAttr('disabled');
-	}	
+		$(errorDiv).attr("hidden","true");
+		$(subBtn).removeAttr("disabled");
+	}
 });
 
-$('#submit').on('click',function(evt){
+$(subBtn).on("click",function(evt){
 	// evt.preventDefault();
+	const col = $(width).val();
+	const row = $(height).val();
 	$(".canvasRow").remove();
 	$(".canvasCol").remove();
-	var col	= $(width).val();
-	var row	= $(height).val();
+
 	for (r = 0; r<row; r++){
 		$(gridArea).append(x);
 		for(c = 0; c<col; c++){
 			makeGrid();
 		}
 	}
-	$('table').css("background-color", "white");
-	$('#save').removeAttr('hidden');
+	$("table").css("background-color", "white");
+	$(downloadBtn).removeAttr("hidden");
 });
 
-$('#reset').on('click',function(evt){
-	$("#save").attr("hidden","true");
+$(resetBtn).on("click",function(evt){
+	$(downloadBtn).attr("hidden","true");
+	$(errorDiv).attr("hidden","true");
+	$(subBtn).removeAttr("disabled");
+	$(height).val(2);
+	$(width).val(2);
 	$(".canvasRow").remove();
 	$(".canvasCol").remove();
 });
 
-var imgLink = $("<a id='myimage'>");
-
-$('#save').on('click',function(evt){
+$(downloadBtn).on("click",function(evt){
 	html2canvas(document.querySelector("#table"))
 	.then(canvas => {
     document.body.appendChild(canvas)
-    var img = canvas.toDataURL("image/png")
+    const img = canvas.toDataURL("image/png")
     			.replace("image/png", "image/octet-stream");
 	$(imgLink)
 	    .attr("href", img)
@@ -74,6 +81,6 @@ $('#save').on('click',function(evt){
 	    .text("Click Me");
 	document.getElementById("myimage")
 		.click();
-	$(canvas).remove();    
+	$(canvas).remove();
 	});
 });
