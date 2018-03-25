@@ -8,7 +8,7 @@ body {
     width: 80vw;
     /*background-image: url(https://im-01.gifer.com/3grp.gif);*/
     /*background-size: cover;*/
-    background-color: rgba(150,155,250,0.7);
+    background-color: rgba(238, 239, 245, 0.7);
 }
 .fa {
     padding: 20px;
@@ -27,13 +27,14 @@ body {
 h1 {
     font-family: Monoton;
     font-size: 3em;
+    font-weight: bold;
     margin: 0.2em;
 }
 
 
 h3 {
+    font-family: Carter One;
     margin: 1em 0 0.25em;
-    font-family: cursive;
 }
 
 h3:first-of-type {
@@ -43,13 +44,14 @@ h3:first-of-type {
 table,
 tr,
 td {
-    border: 1px solid black;
+    border: 0.5px solid black;
 }
 
 table {
     height: 20vh;
     border-collapse: collapse;
     margin: 0 auto;
+    border-width: 0;
 }
 
 tr {
