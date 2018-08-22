@@ -1,112 +1,125 @@
 // Select color input
-const color = $("#colorPicker");
+const color = document.getElementById("colorPicker");
 // Select the canvas area
-const gridArea = $("#pixelCanvas");
+const gridArea = document.getElementById("pixelCanvas");
 // Select size input
-const height = $("#inputHeight");
-const width = $("#inputWeight");
+const height = document.getElementById("inputHeight");
+const width = document.getElementById("inputWeight");
 // Select buttons and error div
-const subBtn = $("#submit");
-const resetBtn = $("#reset");
-const downloadBtn = $("#save");
-const errorDiv = $("#error");
+const subBtn = document.getElementById("submit");
+const resetBtn = document.getElementById("reset");
+const downloadBtn = document.getElementById("save");
+const errorDiv = document.getElementById("error");
 // HTML components to be added dynamically by code
-const x = "<tr class='canvasRow'></tr>";
-const y = "<td class='canvasCol'></td>";
-const imgLink = $("<a id='myimage'>");
+const imgLink = document.createElement('a');
+imgLink.id='myimage';
 
 /**
-* @description It creates the cell of the table and registers click
-*				event on each cell to set/unset the colors
-*/
+ * @description It creates the cell of the table and 
+ * appends it to the repective row.
+ */
 function makeGrid() {
-// Your code goes here!
-	$(".canvasRow:last").append(y);
-	$(".canvasCol:last").on("click",function(e){
-		selecteColor = $(color).val();
-		preColor = $(this).css("background-color");
-		if(preColor == "rgb(255, 255, 255)"
-			|| preColor == "rgba(0, 0, 0, 0)"){
-			$(this).css("background-color",selecteColor);
-		}else{
-			$(this).css("background-color","rgb(255, 255, 255)");
-		}
-	})
+	const y = document.createElement('td');
+	y.className='canvasCol';
+	gridArea.lastElementChild.appendChild(y);
 }
 
 /**
-*@Event_Listener: It alert user about limit on width/height
-*	in realtime before hitting submit.
-*/
-$("#inputHeight, #inputWeight").on("change, keyup",function(evt){
-	console.log($(this).val());
-	if($(this).val() >30){
-		$(subBtn).prop("disabled","true");
-		$(errorDiv).removeAttr("hidden");
-		$(errorDiv).text("Max allowable height/width value is 30.");
-		$(errorDiv).css("color","red");
-	}else{
-		$(errorDiv).attr("hidden","true");
-		$(subBtn).removeAttr("disabled");
+ * @Event_Listener: registers click event on table
+ * to set/unset the colors when user click in any of the table's cell
+ */
+gridArea.addEventListener("click",function(e){
+	selecteColor = color.value;
+	preColor = e.target.style.backgroundColor;
+	if (preColor == "rgb(255, 255, 255)" || preColor == ''
+		|| preColor == "rgba(0, 0, 0, 0)") {
+		e.target.style.backgroundColor=selecteColor;
+	}else {
+		e.target.style.backgroundColor="rgb(255, 255, 255)";
 	}
 });
 
 /**
-*@Event_Listener: When size is submitted by the user, call makeGrid()
-*				to draw the grid structure for pixel art.
-*/
-$(subBtn).on("click",function(evt){
-	// evt.preventDefault();
-	const col = $(width).val();
-	const row = $(height).val();
-	$(".canvasRow").remove();
-	$(".canvasCol").remove();
+ * @Event_Listener: It alert user about limit on width/height
+ * in realtime before hitting submit.
+ */
+['change', 'keyup'].forEach(function(event){
+	document.getElementById('sizePicker').addEventListener(event,function(evt){
+		if(evt.target.value >30){
+			subBtn.setAttribute("disabled","true");
+			errorDiv.removeAttribute("hidden");
+			errorDiv.textContent="Max allowable height/width value is 30.";
+			errorDiv.style.color="red";
+		}else{
+			errorDiv.setAttribute("hidden","true");
+			subBtn.removeAttribute("disabled");
+		}
+	});
+});
 
-	for (r = 0; r<row; r++){
-		$(gridArea).append(x);
-		for(c = 0; c<col; c++){
+/**
+ * @Event_Listener: When size is submitted by the user, call makeGrid()
+ * to draw the grid structure for pixel art.
+ */
+subBtn.addEventListener("click",function(evt){
+	resetTable();
+	const col = width.value;
+	const row = height.value;
+	for (let r = 0; r<row; r++){
+		const x = document.createElement('tr');
+      	x.className='canvasRow';
+		gridArea.appendChild(x);
+		for(let c = 0; c<col; c++){
 			makeGrid();
 		}
 	}
-	$("table").css("background-color", "white");
-	$(downloadBtn).removeAttr("hidden");
+    console.log(gridArea);
+  	document.querySelector("table").style.backgroundColor="white";
+	downloadBtn.removeAttribute("hidden");
 });
 
 /**
-* @Event_Listener: It resets the page state.
-*
-*/
-$(resetBtn).on("click",function(evt){
-	$(downloadBtn).attr("hidden","true");
-	$(errorDiv).attr("hidden","true");
-	$(subBtn).removeAttr("disabled");
-	$(height).val(2);
-	$(width).val(2);
-	$(".canvasRow").remove();
-	$(".canvasCol").remove();
+ * @description It resets the table and delete all rows.
+ */
+function resetTable(){
+  	let rows = document.querySelectorAll('.canvasRow');
+	Array.prototype.forEach.call(rows,function(node,i){
+    	node.parentNode.removeChild(node);
+    });
+}
+
+/**
+ * @Event_Listener: It resets the page state.
+ */
+resetBtn.addEventListener("click",function(evt){
+	downloadBtn.setAttribute("hidden","true");
+	errorDiv.setAttribute("hidden","true");
+	subBtn.removeAttribute("disabled");
+	height.value=2;
+	width.value=2;
+  	resetTable();
 });
 
 /**
-* @Event_Listener: When user click download it does following:
-*					,generate temporary "canvas" tag using table
-*					,adds anchor tag inside canvas
-*					,convert canvas to set image "href" attribute
-*					,sets the "download" attribute on anchor tag
-*					,triggers click event on anchor tag to start download
-*					,removes the "canvas" tag
-*/
-$(downloadBtn).on("click",function(evt){
-	html2canvas(document.querySelector("#table"))
+ * @Event_Listener: When user click download it does following:
+ * generate temporary "canvas" tag using table
+ * adds anchor tag inside canvas
+ * convert canvas to set image "href" attribute
+ * sets the "download" attribute on anchor tag
+ * triggers click event on anchor tag to start download
+ * removes the "canvas" tag
+ */
+downloadBtn.addEventListener("click",function(evt){
+	html2canvas(document.querySelector("#pixelCanvas"))
 	.then(canvas => {
-    document.body.appendChild(canvas)
-    const img = canvas.toDataURL("image/png")
+    	document.body.appendChild(canvas);
+ 		const img = canvas.toDataURL("image/png")
     			.replace("image/png", "image/octet-stream");
-	$(imgLink)
-	    .attr("href", img)
-	    .attr("download", "pixel_art.png")
-	    .appendTo(canvas)
-	document.getElementById("myimage")
-		.click();
-	$(canvas).remove();
-	});
+		imgLink.setAttribute("href", img);
+	    imgLink.setAttribute("download", "pixel_art.png");
+	    canvas.appendChild(imgLink);
+		document.getElementById("myimage").click();
+		document.body.removeChild(canvas);
+	})
+  	.catch(e => console.log(e));
 });

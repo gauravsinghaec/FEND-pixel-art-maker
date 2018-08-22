@@ -12,51 +12,52 @@
 </head>
 <body>
 	<div class="container-fluid main">
-	<header>
-	<h1>Lab: Pixel Art Maker</h1>
-	</header>
-	<h3>Choose Grid Size</h3>
-	<form id="sizePicker">
-		<div class="row">
-		<div class="col-xs-6 text-right">
-		<label for="inputHeight">
-		<span>Grid Height:</span>
-		<input type="number" id="inputHeight" name="height" min="1" max="30" value="2" step="2">
-		</label>
+		<header>
+			<h1>Lab: Pixel Art Maker</h1>
+		</header>
+		<h3>Choose Grid Size</h3>
+		<form id="sizePicker">
+			<div class="row">
+				<div class="col-xs-6 text-right">
+					<label for="inputHeight">
+						<span>Grid Height:</span>
+						<input type="number" id="inputHeight" name="height" min="1" max="30" value="2" step="2">
+					</label>
+				</div>
+				<div class="col-xs-6 text-left">
+					<label for="inputWeight">
+						<span>Grid Width:</span>
+						<input type="number" id="inputWeight" name="width" min="1" max="30" value="2" step="2">
+					</label>
+				</div>
+			</div>
+			<input class="btn btn-primary" type="button" id="submit" value="Submit">
+			<input class="btn btn-primary" type="button" id="reset" value="Reset">
+		</form>
+		<div id="error"></div>
+		<h3>Pick A Color</h3>
+		<input type="color" id="colorPicker" value="#ff0012">
+		<h3>Design Canvas</h3>
+		<br>
+		<div id="table">
+			<table id="pixelCanvas"></table>
 		</div>
-		<div class="col-xs-6 text-left">
-		<label for="inputWeight">
-		<span>Grid Width:</span>
-		<input type="number" id="inputWeight" name="width" min="1" max="30" value="2" step="2">
-		</label>
+		<br>
+		<div id="save" hidden>
+			<button id="download" class="btn btn-primary">Download</button>
 		</div>
-		</div>
-		<input class="btn btn-primary" type="button" id="submit" value="Submit">
-		<input class="btn btn-primary" type="button" id="reset" value="Reset">
-	</form>
-	<div id="error"></div>
-	<h3>Pick A Color</h3>
-	<input type="color" id="colorPicker" value="#ff0012">
-	<h3>Design Canvas</h3>
-	<br>
-	<div id="table">
-	<table id="pixelCanvas">
-	</table>
+		<br><br>
+		<footer>
+			<p class="footer-title">
+				<span>Designed by Gaurav Singh</span>
+			</p>
+			<p class="social-links">
+				<a class="fa fa-facebook-square" href="https://www.facebook.com/gauravsinghaec" target="_blank"></a>
+				<a class="fa fa-github-square" href="https://github.com/gauravsinghaec" target="_blank"></a>
+				<a class="fa fa-linkedin-square" href="https://www.linkedin.com/in/gaurav-singh-a5163063/" target="_blank"></a>
+			</p>
+		</footer>
 	</div>
-	<br>
-	<div id="save" hidden>
-	<button id="download" class="btn btn-primary">
-	Download</button>
-	</div>
-	<br><br>
-	<footer>
-	<p><span>Designed by Gaurav Singh</span></p>
-	<p><a class="fa fa-facebook-square" href="https://www.facebook.com/gauravsinghaec" target="_blank"></a>
-	<a class="fa fa-github-square" href="https://github.com/gauravsinghaec" target="_blank"></a>
-	<a class="fa fa-linkedin-square" href="https://www.linkedin.com/in/gaurav-singh-a5163063/" target="_blank"></a></p>
-	</footer>
-	</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="html2canvas.min.js"></script>
 	<script src="designs.js"></script>
 </body>
